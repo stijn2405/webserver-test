@@ -1,10 +1,11 @@
-# Gebruik een basisimage (bijv. Ubuntu)
-FROM ubuntu
+# Gebruik een officiële Nginx-image als basisimage
+FROM nginx:latest
 
-# Installeer Git
-RUN apt-get update && apt-get install -y git
+# Kopieer de inhoud van je GitHub-repository naar de standaard Nginx-webroot
+COPY . /usr/share/nginx/html
 
-# Clone je GitHub-repository
-RUN git clone https://github.com/stijn2405/webserver-test.git /code
+# Expose poort 80, de standaard HTTP-poort
+EXPOSE 80
 
-# Configureer Nginx of een andere webserver om inhoud van /code te serveren
+# Start de Nginx-webserver wanneer de container wordt uitgevoerd
+CMD ["nginx", "-g", "daemon off;"]
